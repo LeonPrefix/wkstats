@@ -1,0 +1,290 @@
+<!--
+@version     1.0.2
+@copyright   2018+, Robin Findley
+-->
+
+<style>
+.main-content {text-align:center;padding-top:1.5em; position:relative;}
+.main-content h1 {font-size:1.8rem; color:#000; text-shadow:0.0625em 0.0625em 0.125em rgba(0,0,0,0.25); background-color:white; padding:0 0.25em; display:inline-block;}
+.main-content h1:after {content:""; position:absolute; height:1px; left:0; right:0; margin-top:0.65em; background-image:linear-gradient(to right,transparent 20%,rgba(0,0,0,0.6) 30%,rgba(0,0,0,0.6) 70%,transparent 80%); z-index:-1;}
+
+.main-content .nowrap {white-space:nowrap;}
+
+.main-content .config {text-align:left; border-top:1px solid #eee; border-bottom:1px solid #eee; max-width:500px; margin:auto;}
+.main-content .config .open_btn {cursor:pointer;}
+.main-content .config .open_btn:before {content:"\f105"; font-family:FontAwesome; display:inline-block; width:1em;}
+.main-content .config.open .open_btn:before {content:"\f107";}
+.main-content .config .query {text-align:left; border-top:1px solid #eee; border-bottom:1px solid #eee;}
+.main-content .query {border:1px solid #ccc; background-color:rgba(0,0,0,0.03); border-radius:6px; text-align:left; padding:0 0.5em 0.5em 0.5em;}
+.main-content .query fieldset {background-color:rgba(0,0,0,0.03); border:1px solid #ccc; border-radius:4px; padding:.4em;}
+.main-content .query fieldset > legend {width:initial; font-size:initial; margin:initial;}
+.main-content .query .checkbox > input {width:1.5em; height:1.5em; vertical-align:middle;}
+.main-content .query .checkbox > label {display:inline; vertical-align:middle;}
+
+.main-content .chart table.coverage {margin-top:1em; position:relative;}
+.main-content .chart table.coverage {border-collapse:collapse; border-spacing:0; margin-left:auto; margin-right:auto;}
+.main-content .chart table.coverage tr {border-left:1px solid #000;}
+.main-content .chart table.coverage tr:first-child {border-top:1px solid #000;}
+.main-content .chart table.coverage tr:last-child {border-bottom:1px solid #000;}
+.main-content .chart table.coverage tr.header {background-color:#ffd; font-weight:bold;}
+.main-content .chart table.coverage tr.header:nth-child(2) {line-height:1em;}
+.main-content .chart table.coverage tr.header.bottom {border-bottom:1px solid #000;}
+.main-content .chart table.coverage tr:not(.header) + tr:not(.header):not(.current_level) {border-top:1px solid #ddd;}
+.main-content .chart table.coverage tr:not(.header):nth-child(even) {background-color:#efe;}
+.main-content .chart table.coverage td {padding:0 .5em;}
+.main-content .chart table.coverage td:first-child {border-right:1px solid #000;}
+.main-content .chart table.coverage td:last-child {border-right:1px solid #000;}
+.main-content .chart table.coverage tr.header td.header_div {border-bottom:1px solid #0001;}
+.main-content .chart table.coverage tr.count td {font-weight:normal; font-size:0.625em;}
+.main-content .chart table.coverage tr.current_level {border:2px solid #000;}
+.main-content .chart table.coverage tr.current_level:after {content:"\f061"; font-family:FontAwesome; position:absolute; display:inline-block; left:-1.25em;}
+
+.main-content .chart table.nonwk {margin-top:2em;}
+.main-content .chart table.nonwk {border:1px solid #000; border-collapse:collapse; border-spacing:0; margin-left:auto; margin-right:auto;}
+.main-content .chart table.nonwk tr.header {background-color:#eee; font-weight:bold;}
+.main-content .chart table.nonwk tr + tr {border-top:1px solid #000;}
+.main-content .chart table.nonwk td.header {background-color:#ffd; font-weight:bold; line-height:0.8em; border-right:1px solid #000;}
+.main-content .chart table.nonwk td {padding:0.25em 0.5em;}
+.main-content .chart table.nonwk tr:not(.header) td:not(.header):nth-child(odd) {background-color:#efe;}
+.main-content .chart table.nonwk .count {font-weight:normal; font-size:0.625em;}
+
+</style>
+
+<section name="charts-joyo">
+  <h1>Joyo Coverage</h1><br>
+
+  <div class="config">
+    <span class="open_btn">Open Config</span>
+    <div class="query" style="display:none">
+
+      <fieldset>
+        <legend>Calculations</legend>
+        <div class="irow checkbox">
+          <input type="checkbox" name="cumulative" />
+          <label>Cumulative <span class="note">(e.g. Grade3 = Grade1 + Grade2 + Grade3)</span></label>
+        </div>
+      </fieldset>
+
+    </div>
+  </div>
+
+  <div class="chart">Loading...</div>
+
+</section>
+
+<script>
+
+(function() {
+    document.title = 'wkstats: Joyo Coverage';
+
+    //================================================
+    let MAX_LEVEL = 60;
+
+    let use_snapshot = (!wkof.user || (wkof.user.subscription.max_level_granted < MAX_LEVEL));
+
+    if (use_snapshot) {
+        wkof.load_script(wkof.support_files['wk_snapshot.js']);
+    } else {
+        wkof.load_script(wkof.support_files['calc_stats.js'], true);
+    }
+
+    wkof.load_script(wkof.support_files['joyo_kanji.js'], true);
+
+    let settings_name = 'charts_joyo';
+    load_settings();
+    wkof.ready('settings.'+settings_name).then(init_query_ui);
+
+    let items_src = (use_snapshot ? 'wk_snapshot' : 'wkdata.items');
+    wkof.ready(items_src+',joyo.kanji,settings.'+settings_name).then(draw_chart);
+
+    $('.main-content .config .open_btn').on('click', config_open_clicked);
+    $('.main-content .config input[name="cumulative"]').on('click', cumulative_clicked);
+
+    //================================================
+    function load_settings() {
+        let default_settings = {
+            config_open: false,
+            cumulative: false,
+        };
+        wkof.Settings.load(settings_name, default_settings).then(settings => {
+            wkof.set_state('wkof.settings.'+settings_name, 'ready');
+        });
+    }
+
+    //================================================
+    function init_query_ui() {
+        let settings = wkof.settings[settings_name];
+        $('.main-content .query input[name="cumulative"]').prop('checked', settings.cumulative);
+
+        let config = $('.main-content .config');
+        if (settings.config_open !== config.hasClass('open')) {
+            if (settings.config_open) {
+                config.addClass('open');
+                config.find('.open_btn').text('Close Config');
+                $('.main-content .query').slideDown();
+            } else {
+                config.removeClass('open');
+                config.find('.open_btn').text('Open Config');
+                $('.main-content .query').slideUp();
+            }
+        }
+    }
+
+    //================================================
+    function config_open_clicked(e) {
+        let settings = wkof.settings[settings_name];
+        settings.config_open = !settings.config_open;
+        init_query_ui();
+        wkof.Settings.save(settings_name);
+    }
+
+    //================================================
+    function cumulative_clicked(e) {
+        let settings = wkof.settings[settings_name];
+        settings.cumulative = !settings.cumulative;
+        init_query_ui();
+        draw_chart();
+        wkof.Settings.save(settings_name);
+    }
+
+    //================================================
+    let data;
+    function draw_chart() {
+        let content = $('section[name="charts-joyo"] .chart');
+        content.html('');
+
+        let settings = wkof.settings[settings_name];
+
+        let user_level;
+        if (!data) {
+            if (use_snapshot {
+                process_items_snapshot()
+                user_level = 61;
+            } else {
+                process_items();
+                user_level = wkof.user.level;
+            }
+            calculate_chart();
+        }
+
+        // Draw headers.
+        let have_leftover = false;
+        let html = '<table class="coverage"><tr class="header"><td>Wanikani</td><td class="header_div" colspan="'+(data.length)+'">Joyo</td></tr>';
+        html += '<tr class="header"><td>Level</td>';
+        for (let col = 0; col < data.length; col++) {
+            let total = (settings.cumulative ? data[col].cumulative_total : data[col].group_total);
+            html += '<td><span class="nowrap">'+data[col].name+'</span></td>';
+        }
+        html += '</tr><tr class="header count bottom"><td></td>';
+        for (let col = 0; col < data.length; col++) {
+            let total = (settings.cumulative ? data[col].cumulative_total : data[col].group_total);
+            html += '<td>/'+total+'</td>';
+            if (data[col].not_on_wk.length > 0) have_leftover = true;
+        }
+        html += '</tr>';
+
+        // Draw data.
+        let complete = new Array(data.length).fill(false);
+        for (let row = 0; row < MAX_LEVEL; row++) {
+            html += '<tr'+((row+1) === user_level ? ' class="current_level"' : '')+'>';
+            html += '<td>'+(row+1)+'</td>';
+            for (let col = 0; col < data.length; col++) {
+                let total = (settings.cumulative ? data[col].cumulative_total : data[col].group_total);
+                let count = (settings.cumulative ? data[col].levels[row].cumulative_sum : data[col].levels[row].group_sum);
+                if (!complete[col]) {
+                    html += '<td title="'+data[col].levels[row].kanji+'">'+((count / total * 100).toFixed(2)+'%')+'</td>';
+                    if (count === total) complete[col] = true;
+                } else {
+                    html += '<td>---</td>';
+                }
+            }
+            html += '</tr>';
+        }
+        html += '</table>';
+
+        if (have_leftover) {
+            html += '<table class="nonwk"><tr class="header"><td colspan="2">Kanji Not On Wanikani</td></tr>';
+            for (let col = 0; col < data.length; col++) {
+                let total = data[col].group_total;
+                let count = data[col].not_on_wk.length;
+                if (count > 0) {
+                    html += '<tr><td class="header"><span class="nowrap">'+data[col].name+'</span><br><span class="count">'+count+'/'+total+'</span></td>';
+                    html += '<td>'+data[col].not_on_wk.split('').join(' ')+'</td></tr>'
+                }
+            }
+            html += '</table></div>';
+        }
+
+        content.html(html);
+    }
+
+    //================================================
+    function process_items_snapshot() {
+        let not_on_wk = [];
+        let cumulative_total = 0;
+        data = joyo.kanji_by_level.map(group => {
+            let levels = new Array(MAX_LEVEL).fill('');
+            let not_on_wk = '';
+            for (let idx = 0; idx < group.kanji.length; idx++) {
+                let slug = group.kanji[idx];
+                let lvl;
+                for (lvl = 1; lvl <= 60; lvl++) {
+                    if (wk_snapshot[lvl].indexOf(slug) >= 0) {
+                        levels[lvl-1] += slug;
+                        break;
+                    }
+                }
+                if (lvl > 60) not_on_wk += slug;
+            }
+            let group_total = group.kanji.length;
+            cumulative_total += group_total;
+            return {name:group.name, levels:levels, not_on_wk:not_on_wk, group_total:group_total, cumulative_total:cumulative_total};
+        });
+    }
+
+    //================================================
+    function process_items() {
+        let not_on_wk = [];
+        let cumulative_total = 0;
+        data = joyo.kanji_by_level.map(group => {
+            let levels = new Array(MAX_LEVEL).fill('');
+            let not_on_wk = '';
+            for (let idx = 0; idx < group.kanji.length; idx++) {
+                let slug = group.kanji[idx];
+                let wk_item = wkdata.items_by_slug[slug];
+                if (wk_item instanceof Array) wk_item = wk_item.filter(item => item.object === 'kanji')[0];
+                if (wk_item) {
+                    levels[wk_item.data.level - 1] += slug;
+                } else {
+                    not_on_wk += slug;
+                }
+            }
+            let group_total = group.kanji.length;
+            cumulative_total += group_total;
+            return {name:group.name, levels:levels, not_on_wk:not_on_wk, group_total:group_total, cumulative_total:cumulative_total};
+        });
+    }
+
+    //================================================
+    function calculate_chart() {
+        let prior_group;
+        data.forEach(group => {
+            let group_sum = 0;
+            for (let level = 0; level < MAX_LEVEL; level++) {
+                let kanji = group.levels[level];
+                let count = kanji.length;
+                kanji = kanji.split('').sort().join('');
+                group_sum += count;
+
+                let cumulative_sum = (prior_group ? prior_group.levels[level].cumulative_sum : 0) + group_sum;
+                group.levels[level] = {group_sum:group_sum, cumulative_sum:cumulative_sum, kanji:kanji};
+            }
+
+            prior_group = group;
+        });
+    }
+
+})();
+
+</script>
+

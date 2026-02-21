@@ -1,0 +1,43 @@
+<!--
+@version     1.0.1
+@copyright   2018+, Robin Findley
+-->
+
+<style>
+.main-content {text-align:center;padding-top:1.5em; position:relative;}
+.main-content h1 {font-size:1.8rem; color:#000; text-shadow:0.0625em 0.0625em 0.125em rgba(0,0,0,0.25); background-color:white; padding:0 0.25em; display:inline-block;}
+.main-content h1:after {content:""; position:absolute; height:1px; left:0; right:0; margin-top:0.65em; background-image:linear-gradient(to right,transparent 20%,rgba(0,0,0,0.6) 30%,rgba(0,0,0,0.6) 70%,transparent 80%); z-index:-1;}
+
+/* THEME */
+
+</style>
+
+<section name="current_status">
+  <h1>Projections</h1>
+
+  <div class="projections">Sorry, this page is still under construction.</div>
+
+</section>
+
+<script>
+
+(function() {
+    document.title = 'wkstats: Projections';
+
+    if (!wkof.user) return nav.login();
+
+    wkof.load_script(wkof.support_files['calc_projections.js'], true);
+    wkof.ready('wkstats.projections').then(populate_projections)
+
+    //================================================
+    function populate_projections() {
+        wkof.trigger('wkstats.projections.loaded');
+        for (let level = 1; level <= wkof.user.subscription.max_level_granted; level++) {
+            console.log(level+': '+project_level(level).date);
+        }
+    }
+
+})();
+
+</script>
+

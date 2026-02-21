@@ -1,0 +1,119 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta name="google" content="notranslate" />
+  <meta http-equiv="Content-Language" content="en_US" />
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+
+<!--  <link rel="stylesheet" href="/css/main.css"> -->
+  <link rel='stylesheet' href="/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="/css/bootstrap-4.1.1.min.css">
+
+  <title>wkstats</title>
+  <meta name="application-name" content="WaniKani Statistics">
+  <meta name="description" content="Track your progress on WaniKani. Estimate your completion date. Track your progress toward JLPT levels.">
+
+  <script src="/js/jquery-3.3.1.min.js"></script>
+
+<style>
+.nav_header {padding-left:0; padding-right:0;}
+
+hr.title_underline {height:1px; border:0; margin:0; padding:0; transform:translateY(46px);}
+nav.navbar {align-items:baseline; padding-top:0; padding-bottom:0.8em;}
+a.navbar-brand {transform:translateY(15px); margin:0; padding:0;}
+a.navbar-brand > img {vertical-align:baseline;}
+ul.navbar-nav {margin-left:30px; font-size:1.2em;}
+button.navbar-toggler {align-self:center; padding:.1em .3em;}
+ul.navbar-nav .nav-link {text-align:right;}
+
+nav.navbar:after {content:""; position:absolute; height:2px; bottom:0; left:0; right:0;}
+
+li.navbar-item {position:relative;}
+.navbar-collapse:not(.show) .dropdown-menu.show:before {content:""; border:0.5em solid transparent; position:absolute; top:-1em; left:0.5em;}
+
+.navbar-collapse:not(.show):not(.collapsing) .navbar-item.user-menu {position:absolute; right:1em;}
+.navbar-collapse:not(.show) .user-menu .dropdown-menu {right:0; left:unset;}
+.navbar-collapse:not(.show) .user-menu .dropdown-menu.show:before {right:0.5em; left:unset;}
+
+a.nav-link {position:relative;}
+a.nav-link:hover:after {content:""; position:absolute; left:0; right:0; bottom:7px; height:1px;}
+
+/* THEME */
+.nav_header {background-image:linear-gradient(to right,transparent,rgba(240,240,255,0.5) 5%,rgba(240,240,255,0.5) 95%,transparent);}
+hr.title_underline {background-image:linear-gradient(to right,transparent,rgba(0,0,0,0.6) 4.5em,rgba(0,0,0,0.6) 50%,transparent 50%),linear-gradient(to left,transparent,rgba(0,0,0,0.6) 4.5em,rgba(0,0,0,0.6)	50%,transparent	50%);}
+nav.navbar:after {background-image:radial-gradient(ellipse at 50% 0%, rgba(0,0,0,0.2),transparent 70%);}
+.navbar-collapse:not(.show) .dropdown-menu.show:before {border-bottom-color:rgba(0,0,0,0.2);}
+a.nav-link:hover:after {background-image:linear-gradient(to right,transparent,black,transparent);}
+</style>
+
+</head>
+
+<body>
+
+<section class="container nav_header">
+  <hr class="title_underline">
+  <nav class="navbar navbar-expand-sm navbar-light">
+    <a class="navbar-brand" href="/"><img class="header_logo" alt="WaniKani Statistics" src="/images/site_logo.png"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="navbar-item active">
+          <a class="nav-link" href="/progress" data-toggle="dropdown" id="navbarProgressMenuLink" aria-haspopup="true" aria-expanded="false">Progress</a>
+          <div class="dropdown-menu" aria-labelledby="navbarProgressMenuLink">
+            <a class="dropdown-item ilink" href="/progress/dashboard">Dashboard</a>
+            <a class="dropdown-item ilink" href="/progress/level-up">Level-up</a>
+            <a class="dropdown-item ilink" href="/progress/projections">Projections</a>
+          </div>
+        </li>
+        <li class="navbar-item">
+          <a class="nav-link" href="/items" data-toggle="dropdown" id="navbarItemsMenuLink" aria-haspopup="true" aria-expanded="false">Items</a>
+          <div class="dropdown-menu" aria-labelledby="navbarItemsMenuLink">
+            <a class="dropdown-item ilink" href="/items/wanikani">Wanikani</a>
+            <a class="dropdown-item ilink" href="/items/jlpt">JLPT</a>
+            <a class="dropdown-item ilink" href="/items/joyo">Joyo</a>
+            <a class="dropdown-item ilink" href="/items/frequency">Frequency</a>
+          </div>
+        </li>
+        <li class="navbar-item">
+          <a class="nav-link" href="/charts" data-toggle="dropdown" id="navbarChartsMenuLink" aria-haspopup="true" aria-expanded="false">Charts</a>
+          <div class="dropdown-menu" aria-labelledby="navbarChartsMenuLink">
+            <a class="dropdown-item ilink" href="/charts/jlpt">JLPT</a>
+            <a class="dropdown-item ilink" href="/charts/joyo">Joyo</a>
+            <a class="dropdown-item ilink" href="/charts/frequency">Frequency</a>
+            <a class="dropdown-item ilink" href="/charts/reading">Reading</a>
+          </div>
+        </li>
+        <li class="navbar-item user-menu">
+          <a class="nav-link" href="/login" data-toggle="none" id="navbarUserMenuLink" aria-haspopup="true" aria-expanded="false">login</a>
+          <div class="dropdown-menu" aria-labelledby="navbarUserMenuLink">
+            <a class="dropdown-item ilink" href="/refresh">Refresh Data</a>
+            <a class="dropdown-item ilink" href="/settings">Settings</a>
+            <a class="dropdown-item ilink" href="/logout">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</section>
+
+<section class="container main-content">
+</section>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
+<script src="/js/bootstrap-4.1.1.min.js"></script>
+
+<script src="/js/Core-1.1.3.js"></script>
+<script src="/js/nav-1.0.14.js"></script>
+<script src="/js/startup-1.0.3.js"></script>
+
+</body>
+</html>

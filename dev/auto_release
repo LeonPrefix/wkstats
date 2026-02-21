@@ -1,0 +1,54 @@
+#!/bin/bash
+
+SPATH="`readlink -f $0`"
+SNAME="`basename ${SPATH}`"
+MPATH="`dirname ${SPATH}`"
+DEST=".."
+PIDFILE="/var/run/${SNAME}.pid"
+
+#echo $$ >"${PIDFILE}"
+#trap 'kill -s INT 0; rm -f ${PIDFILE}; exit' EXIT
+
+inotifywait -m "${MPATH}" -r -e close_write 2>/dev/null |
+while read fpath action file; do
+# fpath=~/projects/wkstats/dev/js/
+# action=CLOSE_WRITE,CLOSE
+# file=Core.js
+
+	# Ignore temporary files created by 'sed'
+	[[ "${file}" =~ ^sed[A-Za-z0-9]+ ]] && continue
+	[[ "${file}" =~ \.tmp$ ]] && continue
+
+	rpath="${fpath##${MPATH}/}"
+	rpath="${rpath%/}"
+	rfile="${rpath}/${file}"
+	fbase="${file%.*}"
+	fext="${file##*.}"
+	verline=`grep -m 1 "@version" "${rfile}"`
+	if [[ "${verline}" =~ [0-9.]+ ]]; then
+		ver="${BASH_REMATCH[0]}"
+		dpath="${DEST}/${rpath}"
+		mkdir -p "${dpath}"
+		dfile="${dpath}/${fbase}-${ver}.${fext}"
+		echo cp "${rfile}" "${dfile}"
+		cp "${rfile}" "${dfile}"
+
+		# Update nav.js
+		if [[ "${rpath}" =~ ^components ]]; then
+			cpath="${rpath##components}/${fbase}"
+			sed -i -e "s|\('${cpath}'\s*:\s*'\)[0-9.]\+'|\1${ver}'|g" js/nav.js
+		fi
+
+		# Update Core.js
+		if [ ! "${file}" = "Core.js" ]; then
+			sed -i -e "s|\('/${rpath}/${fbase}-\)[0-9.]\+\(\.${fext}\)'|\1${ver}\2'|g" js/Core.js
+		fi
+
+		# Update index.html
+		sed -i -e "s|\(\"/${rpath}/${fbase}-\)[0-9.]\+\(\.${fext}\)\"|\1${ver}\2\"|g" ../index.html
+
+	else
+		:
+	fi
+
+done
