@@ -155,7 +155,6 @@ function process_items(items) {
 //================================================
 function calc_accuracy() {
   let items = wkdata.items;
-  let items_by_level = wkdata.items_by_level;
 
   let item_counts = {
     radical: 0,
@@ -187,6 +186,17 @@ function calc_accuracy() {
     vocabulary: { readings: 0, meanings: 0, total: 0 },
   };
 
+  let item_progress = {
+    overall_items: items.length,
+    per_stage: {
+      apprentice: 0,
+      guru: 0,
+      master: 0,
+      enlightened: 0,
+      burned: 0,
+    },
+  };
+
   for (let idx = 0; idx < items.length; idx++) {
     let item = items[idx];
     // Removed: Items may have been moved to higher levels!!
@@ -196,6 +206,18 @@ function calc_accuracy() {
 
     let itype = item.object;
     if (item.assignments.srs_stage >= 5) item_counts[itype]++;
+
+    if ([1, 2, 3, 4].includes(item.assignments.srs_stage)) {
+      item_progress.per_stage.guru++;
+    } else if ([5, 6].includes(item.assignments.srs_stage)) {
+      item_progress.per_stage.guru++;
+    } else if (item.assignments.srs_stage === 7) {
+      item_progress.per_stage.master++;
+    } else if (item.assignments.srs_stage === 8) {
+      item_progress.per_stage.enlightened++;
+    } else if (item.assignments.srs_stage === 9) {
+      item_progress.per_stage.burned++;
+    }
 
     let mc, mi, rc, ri;
     if (itype === "radical") {
@@ -260,6 +282,7 @@ function calc_accuracy() {
       review_counts.vocabulary.incorrect_meanings);
 
   wkstats.item_counts = item_counts;
+  wkstats.item_progress = item_progress;
   wkstats.review_counts = review_counts;
   wkstats.accuracy = accuracy;
   wkof.set_state("wkof.wkstats.accuracy", "ready");
