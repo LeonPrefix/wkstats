@@ -1,0 +1,173 @@
+.main-content {
+  text-align: center;
+  padding-top: 1.5em;
+  position: relative;
+}
+.main-content h1 {
+  font-size: 1.8rem;
+  color: #000;
+  text-shadow: 0.0625em 0.0625em 0.125em rgba(0, 0, 0, 0.25);
+  background-color: white;
+  padding: 0 0.25em;
+  display: inline-block;
+}
+.main-content h1:after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  left: 0;
+  right: 0;
+  margin-top: 0.65em;
+  background-image: linear-gradient(
+    to right,
+    transparent 20%,
+    rgba(0, 0, 0, 0.6) 30%,
+    rgba(0, 0, 0, 0.6) 70%,
+    transparent 80%
+  );
+  z-index: -1;
+}
+
+.main-content .chart {
+  display: inline-table;
+}
+.main-content .data {
+  overflow-x: auto;
+  display: inline-block;
+}
+.main-content .chart td {
+  padding: 0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.main-content .chart td.median,
+.main-content .chart td.average {
+  font-size: 0.875em;
+  line-height: 1.3em;
+}
+
+/* translate(0,0) force Firefox to align SVGs to pixel grid */
+.main-content svg {
+  transform: translate(0, 0); /* shape-rendering:crispedges;*/
+}
+.main-content text {
+  font-family: Helvetica, Arial, sans-serif;
+  user-select: none;
+}
+
+/* data svg */
+.main-content .data .grid {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1;
+  stroke-linecap: square;
+}
+.main-content .data .grid .avg {
+  stroke-width: 0;
+}
+.main-content .data .grid .avg .divider {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.15);
+  stroke-width: 1;
+}
+.main-content .data .bar {
+  stroke: #000;
+  stroke-width: 1;
+  stroke-linecap: square;
+}
+.main-content .data .reset .time {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.5em;
+  text-anchor: end;
+}
+.main-content .data .break_lines {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1;
+  stroke-linecap: square;
+}
+.main-content .data mask .keep {
+  fill: #fff;
+}
+.main-content .data mask .toss {
+  fill: #000;
+}
+.main-content .data .time {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.6875em;
+  letter-spacing: 0.03em;
+}
+.main-content .data .time.light {
+  fill: #fff;
+}
+.main-content .data .time.dark {
+  fill: #000;
+}
+.main-content .data .x_label text {
+  font-size: 0.6875em;
+  text-anchor: middle;
+  font-family: "Noto Sans", "Noto Sans CJK JP", sans-serif;
+}
+.main-content .data .click {
+  stroke: #000;
+  opacity: 0;
+  cursor: pointer;
+}
+.main-content .data text.x_axis {
+  font-size: 1em;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+/* y_labels svg */
+.main-content .y_labels .grid {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1;
+  stroke-linecap: square;
+}
+.main-content .y_labels .labels text {
+  font-size: 0.8em;
+  text-anchor: end;
+}
+.main-content .y_labels .labels text.y_axis {
+  font-size: 1em;
+  font-weight: bold;
+  text-anchor: middle;
+}
+
+/* THEME */
+.main-content .avg_slider {
+  background-color: #eee;
+  opacity: 0;
+}
+
+.main-content .data .reset .bar {
+  fill: #000;
+}
+.main-content .data .current .bar {
+  fill: #ff4dc4;
+}
+.main-content .data .fastest .bar {
+  fill: #59c9ff;
+}
+.main-content .data .fast .bar {
+  fill: #4d68e4;
+}
+.main-content .data .slow .bar {
+  fill: #aa4ac1;
+}
+.main-content .data .slowest .bar {
+  fill: #555555;
+}
+.main-content .data .excluded .bar {
+  fill: rgba(0, 0, 0, 0.1);
+  stroke-opacity: 0.2;
+}
+.main-content .data .excluded .break_lines {
+  stroke-opacity: 0.2;
+}
+.main-content .data .excluded .time {
+  fill: rgba(0, 0, 0, 0.5);
+}

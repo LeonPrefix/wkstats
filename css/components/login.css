@@ -1,0 +1,44 @@
+.main-content {
+  text-align: center;
+  padding-top: 1em;
+}
+.apikey-dialog {
+  display: inline-block;
+  margin-top: 2em;
+  padding: 1em 2em 2em 2em;
+  border-radius: 1em;
+}
+.apikey-dialog h1 {
+  font-size: 1.8rem;
+}
+.apikey-dialog p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.apikey-dialog note {
+  font-style: italic;
+  font-size: 0.8em;
+}
+.apikey-dialog input.apikey {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.apikey-dialog button.submit {
+  margin-top: 0.5em;
+}
+
+/* THEME */
+.apikey-dialog {
+  border: 2px solid #88c;
+  background-image: linear-gradient(-30deg, #f3f3ff, #fcfcff);
+}
+.apikey-dialog h1 {
+  color: #000;
+  text-shadow: 0.0625em 0.0625em 0.125em rgba(0, 0, 0, 0.25);
+}
+.apikey-dialog input.apikey::placeholder {
+  color: #00000055;
+}
+.apikey-dialog note.error {
+  color: red;
+}

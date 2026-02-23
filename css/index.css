@@ -1,0 +1,106 @@
+.nav_header {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+hr.title_underline {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  transform: translateY(46px);
+}
+nav.navbar {
+  align-items: baseline;
+  padding-top: 0;
+  padding-bottom: 0.8em;
+}
+a.navbar-brand {
+  transform: translateY(15px);
+  margin: 0;
+  padding: 0;
+}
+a.navbar-brand > img {
+  vertical-align: baseline;
+}
+ul.navbar-nav {
+  margin-left: 30px;
+  font-size: 1.2em;
+}
+button.navbar-toggler {
+  align-self: center;
+  padding: 0.1em 0.3em;
+}
+ul.navbar-nav .nav-link {
+  text-align: right;
+}
+
+nav.navbar:after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+li.navbar-item {
+  position: relative;
+}
+.navbar-collapse:not(.show) .dropdown-menu.show:before {
+  content: "";
+  border: 0.5em solid transparent;
+  position: absolute;
+  top: -1em;
+  left: 0.5em;
+}
+
+.navbar-collapse:not(.show):not(.collapsing) .navbar-item.user-menu {
+  position: absolute;
+  right: 1em;
+}
+.navbar-collapse:not(.show) .user-menu .dropdown-menu {
+  right: 0;
+  left: unset;
+}
+.navbar-collapse:not(.show) .user-menu .dropdown-menu.show:before {
+  right: 0.5em;
+  left: unset;
+}
+
+a.nav-link {
+  position: relative;
+}
+a.nav-link:hover:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 7px;
+  height: 1px;
+}
+
+/* THEME */
+.nav_header {
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(240, 240, 255, 0.5) 5%,
+    rgba(240, 240, 255, 0.5) 95%,
+    transparent
+  );
+}
+hr.title_underline {
+  background-image:
+    linear-gradient(to right, transparent, rgba(0, 0, 0, 0.6) 4.5em, rgba(0, 0, 0, 0.6) 50%, transparent 50%),
+    linear-gradient(to left, transparent, rgba(0, 0, 0, 0.6) 4.5em, rgba(0, 0, 0, 0.6) 50%, transparent 50%);
+}
+nav.navbar:after {
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(0, 0, 0, 0.2), transparent 70%);
+}
+.navbar-collapse:not(.show) .dropdown-menu.show:before {
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+}
+a.nav-link:hover:after {
+  background-image: linear-gradient(to right, transparent, black, transparent);
+}
