@@ -3,7 +3,7 @@
 
   if (!wkof.user) return nav.login();
 
-  wkof.load_script(wkof.support_files["calc_stats.js"], true);
+  wkof.load_script(wkof.support_files["calc_stats.js"], false);
 
   wkof.ready("wkstats.levelups,wkstats.average").then(draw_chart);
   wkof.ready("wkstats.levelups").then(show_levelups_in_console);

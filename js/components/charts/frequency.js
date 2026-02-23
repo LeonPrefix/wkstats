@@ -9,10 +9,10 @@
   if (use_snapshot) {
     wkof.load_script(wkof.support_files["wk_snapshot.js"]);
   } else {
-    wkof.load_script(wkof.support_files["calc_stats.js"], true);
+    wkof.load_script(wkof.support_files["calc_stats.js"], false);
   }
 
-  wkof.load_script(wkof.support_files["freq_kanji.js"], true);
+  wkof.load_script(wkof.support_files["freq_kanji.js"], false);
 
   let settings_name = "charts_freq";
   load_settings();

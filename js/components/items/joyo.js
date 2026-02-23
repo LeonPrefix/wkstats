@@ -3,8 +3,8 @@
 
   if (!wkof.user) return nav.login();
 
-  wkof.load_script(wkof.support_files["calc_stats.js"], true);
-  wkof.load_script(wkof.support_files["joyo_kanji.js"], true);
+  wkof.load_script(wkof.support_files["calc_stats.js"], false);
+  wkof.load_script(wkof.support_files["joyo_kanji.js"], false);
 
   let settings_name = "items_joyo";
   load_settings();

@@ -3,7 +3,7 @@
 
   if (!wkof.user) return nav.login();
 
-  wkof.load_script(wkof.support_files["calc_projections.js"], true);
+  wkof.load_script(wkof.support_files["calc_projections.js"], false);
   wkof.ready("wkstats.projections").then(populate_projections);
 
   //================================================

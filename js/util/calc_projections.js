@@ -4,7 +4,7 @@
 // ==/UserScript==
 
 //================================================
-wkof.load_script(wkof.support_files["calc_stats.js"], true);
+wkof.load_script(wkof.support_files["calc_stats.js"], false);
 
 wkof.ready("wkstats.average").then(get_srs_info);
 

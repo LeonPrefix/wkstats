@@ -3,7 +3,7 @@
 
   if (!wkof.user) return nav.login();
 
-  wkof.load_script(wkof.support_files["calc_stats.js"], true);
+  wkof.load_script(wkof.support_files["calc_stats.js"], false);
 
   let settings_name = "items_wanikani";
   load_settings();

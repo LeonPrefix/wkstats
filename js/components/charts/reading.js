@@ -9,16 +9,16 @@
   if (use_snapshot) {
     wkof.load_script(wkof.support_files["wk_snapshot.js"]);
   } else {
-    wkof.load_script(wkof.support_files["calc_stats.js"], true);
+    wkof.load_script(wkof.support_files["calc_stats.js"], false);
   }
 
   let groups;
   let promises = Promise.all([
-    wkof.load_script(wkof.support_files["freq_aozora.js"], true),
-    wkof.load_script(wkof.support_files["freq_nhkeasy.js"], true),
-    wkof.load_script(wkof.support_files["freq_news.js"], true),
-    wkof.load_script(wkof.support_files["freq_twitter.js"], true),
-    wkof.load_script(wkof.support_files["freq_wikipedia.js"], true),
+    wkof.load_script(wkof.support_files["freq_aozora.js"], false),
+    wkof.load_script(wkof.support_files["freq_nhkeasy.js"], false),
+    wkof.load_script(wkof.support_files["freq_news.js"], false),
+    wkof.load_script(wkof.support_files["freq_twitter.js"], false),
+    wkof.load_script(wkof.support_files["freq_wikipedia.js"], false),
   ]).then(() => {
     groups = [freq_aozora, freq_nhkeasy, freq_news, freq_twitter, freq_wikipedia];
     wkof.set_state("wkof.reading.kanji", "ready");
