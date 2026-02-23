@@ -27,3 +27,66 @@
   );
   z-index: -1;
 }
+
+.main-content .chart table.coverage {
+  margin-top: 1em;
+  position: relative;
+  margin-bottom: 1em;
+}
+.main-content .chart table.coverage {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+.main-content .chart table.coverage tr {
+  border-left: 1px solid #000;
+}
+.main-content .chart table.coverage tr:first-child {
+  border-top: 1px solid #000;
+}
+.main-content .chart table.coverage tr:last-child {
+  border-bottom: 1px solid #000;
+}
+.main-content .chart table.coverage tr.header {
+  background-color: #ffd;
+  font-weight: bold;
+}
+.main-content .chart table.coverage tr.header:nth-child(2) {
+  line-height: 1em;
+}
+.main-content .chart table.coverage tr.header.bottom {
+  border-bottom: 1px solid #000;
+}
+.main-content .chart table.coverage tr:not(.header) + tr:not(.header):not(.current_level) {
+  border-top: 1px solid #ddd;
+}
+.main-content .chart table.coverage tr:not(.header):nth-child(even) {
+  background-color: #efe;
+}
+.main-content .chart table.coverage td {
+  padding: 0 0.5em;
+}
+.main-content .chart table.coverage td:first-child {
+  border-right: 1px solid #000;
+}
+.main-content .chart table.coverage td:last-child {
+  border-right: 1px solid #000;
+}
+.main-content .chart table.coverage tr.header td.header_div {
+  border-bottom: 1px solid #0001;
+}
+.main-content .chart table.coverage tr.count td {
+  font-weight: normal;
+  font-size: 0.625em;
+}
+.main-content .chart table.coverage tr.current_level {
+  border: 2px solid #000;
+}
+.main-content .chart table.coverage tr.current_level:after {
+  content: "\f061";
+  font-family: FontAwesome;
+  position: absolute;
+  display: inline-block;
+  left: -1.25em;
+}
