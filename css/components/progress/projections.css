@@ -28,6 +28,34 @@
   z-index: -1;
 }
 
+.main-content .chart button.project {
+  border: 1px solid #ccc;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 6px;
+  text-align: left;
+  padding: 0.25em 0.5em 0.25em 0.5em;
+  margin-left: 1em;
+}
+
+.main-content .chart input {
+  vertical-align: middle;
+  margin: 5px 0;
+}
+
+.main-content .chart input[type="checkbox"] {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.main-content .chart input[type="number"] {
+  width: 5em;
+}
+
+.main-content .chart label {
+  display: inline;
+  vertical-align: middle;
+}
+
 .main-content .chart table.coverage {
   margin-top: 1em;
   position: relative;

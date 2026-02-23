@@ -147,11 +147,11 @@
                       const s = i === 0 ? "current" : time;
                       return `<label for="speed-${s}">Hypothetical Speed for fastest ${P.formatInterval(time)}
                 (levels ${P.rangeFormat(u.filter((d, i) => time === d[0]).map((d) => d[1]))}):</label>
-                <input type="number" id="speed-${s}" size="4" value="${P.getHyp(time, i === 0) / 3600}">h<br/>`;
+                <input type="number" id="speed-${s}" size="4" value="${P.getHyp(time, i === 0) / 3600}"> hours<br/>`;
                     })
                     .reduce((a, b) => a + b)
                 : `<label for="speed">Hypothetical Speed:</label>
-            <input type="number" id="speed" size="4" value="${P.getHyp(time) / 3600}">h`
+            <input type="number" id="speed" size="4" value="${P.getHyp(time) / 3600}"> hours`
             }
             <button id="project" class="project">Project</button><br/>
             <table class="coverage"><tbody><tr class="header"> ${
