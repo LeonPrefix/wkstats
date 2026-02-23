@@ -1,0 +1,261 @@
+<!--
+@version     1.0.1
+@copyright   2018+, Robin Findley
+-->
+
+<style>
+  .main-content {
+    text-align: center;
+    padding-top: 1.5em;
+    position: relative;
+  }
+  .main-content h1 {
+    font-size: 1.8rem;
+    color: #000;
+    text-shadow: 0.0625em 0.0625em 0.125em rgba(0, 0, 0, 0.25);
+    background-color: white;
+    padding: 0 0.25em;
+    display: inline-block;
+  }
+  .main-content h1:after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    left: 0;
+    right: 0;
+    margin-top: 0.65em;
+    background-image: linear-gradient(
+      to right,
+      transparent 20%,
+      rgba(0, 0, 0, 0.6) 30%,
+      rgba(0, 0, 0, 0.6) 70%,
+      transparent 80%
+    );
+    z-index: -1;
+  }
+  .rad {
+    color: #00a1f1;
+  }
+  .kan {
+    color: #f100a1;
+  }
+  .voc {
+    color: #a100f1;
+  }
+  .main-content section {
+    margin-bottom: 2em;
+  }
+  .main-content table {
+    margin: auto;
+    font-size: 1em;
+    line-height: 1.4em;
+  }
+
+  .main-content table[name="current_status"] th {
+    font-weight: normal;
+    padding-right: 0.5em;
+    text-align: right;
+  }
+  .main-content table[name="current_status"] td {
+    text-align: left;
+    font-weight: bold;
+    padding-left: 0.5em;
+  }
+  .main-content table[name="current_status"] td > span:not(:first-child) {
+    margin-left: 0.5em;
+  }
+
+  .main-content table[name="accuracy"] tr.header {
+    font-weight: bold;
+    text-align: center;
+  }
+  .main-content table[name="accuracy"] tr.header th {
+    font-weight: bold;
+    text-align: center;
+  }
+  .main-content table[name="accuracy"] th {
+    font-weight: normal;
+    text-align: right;
+    padding: 0 0.5em;
+  }
+  .main-content table[name="accuracy"] .row_header {
+    font-weight: normal;
+    text-align: right;
+  }
+  .main-content table[name="accuracy"] td {
+    text-align: center;
+    font-weight: bold;
+    padding: 0 0.5em;
+  }
+
+  /* THEME */
+  .main-content table[name="accuracy"] tr.header {
+    border-bottom: 1px solid #dee2e6;
+  }
+</style>
+
+<section name="current_status">
+  <h1>Current Status</h1>
+
+  <table name="current_status">
+    <tr>
+      <th>Level:</th>
+      <td data-id="user_level">--</td>
+    </tr>
+    <tr>
+      <th>Typical Level-up:</th>
+      <td data-id="typical_levelup">--</td>
+    </tr>
+    <tr>
+      <th>Time on Level:</th>
+      <td data-id="time_on_level">--</td>
+    </tr>
+    <tr class="level_up_in">
+      <th>Level-up In:</th>
+      <td data-id="levelup_in">--</td>
+    </tr>
+    <tr class="burn_all" hidden>
+      <th>Burn-All In:</th>
+      <td data-id="burn_all_in">--</td>
+    </tr>
+    <tr>
+      <th data-label-id="start_date">Start Date:</th>
+      <td data-id="start_date">--</td>
+    </tr>
+    <tr class="restart_date" hidden>
+      <th>Restart Date:</th>
+      <td data-id="restart_date">--</td>
+    </tr>
+    <tr>
+      <th class="row_header">Items Learned (Guru+):</th>
+      <td>
+        <span class="rad" lang="ja"><span data-id="radicals_learned">--</span>部首</span>
+        <span class="kan" lang="ja"><span data-id="kanji_learned">--</span>漢字</span>
+        <span class="voc" lang="ja"><span data-id="vocabulary_learned">--</span>単語</span>
+      </td>
+    </tr>
+  </table>
+</section>
+
+<section name="accuracy">
+  <h1><span>Accuracy</span></h1>
+
+  <table name="accuracy">
+    <tr class="header border-bottom">
+      <th></th>
+      <th>Reading</th>
+      <th>Meaning</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>Total Reviews:</th>
+      <td data-id="total_readings">---</td>
+      <td data-id="total_meanings">---</td>
+      <td data-id="total_reviews">---</td>
+    </tr>
+    <tr>
+      <th>Correct:</th>
+      <td data-id="correct_readings">---</td>
+      <td data-id="correct_meanings">---</td>
+      <td data-id="correct_reviews">---</td>
+    </tr>
+    <tr>
+      <th>Incorrect:</th>
+      <td data-id="incorrect_readings">---</td>
+      <td data-id="incorrect_meanings">---</td>
+      <td data-id="incorrect_reviews">---</td>
+    </tr>
+    <tr class="border-bottom">
+      <th>Accuracy:</th>
+      <td data-id="accuracy_readings">---</td>
+      <td data-id="accuracy_meanings">---</td>
+      <td data-id="accuracy_total">---</td>
+    </tr>
+    <tr>
+      <th>Radicals:</th>
+      <td class="rad" data-id="radical_readings">---</td>
+      <td class="rad" data-id="radical_meanings">---</td>
+      <td class="rad" data-id="radical_total">---</td>
+    </tr>
+    <tr>
+      <th>Kanji:</th>
+      <td class="kan" data-id="kanji_readings">---</td>
+      <td class="kan" data-id="kanji_meanings">---</td>
+      <td class="kan" data-id="kanji_total">---</td>
+    </tr>
+    <tr>
+      <th>Vocabulary:</th>
+      <td class="voc" data-id="vocabulary_readings">---</td>
+      <td class="voc" data-id="vocabulary_meanings">---</td>
+      <td class="voc" data-id="vocabulary_total">---</td>
+    </tr>
+  </table>
+</section>
+
+<script>
+  (function () {
+    document.title = "wkstats: Dashboard";
+
+    if (!wkof.user) return nav.login();
+
+    wkof.load_script(wkof.support_files["calc_stats.js"], true).then(populate_user_info);
+
+    wkof.ready("wkstats.accuracy").then(populate_accuracy);
+    wkof.ready("wkstats.levelups").then(populate_levelups);
+    wkof.ready("wkstats.average").then(populate_averages);
+
+    function populate_user_info() {
+      $('[data-id="user_level"]').text(wkof.user.level);
+      $('[data-id="start_date"]').text(yyyymmdd(wkof.user.started_at) + " (" + days_ago(wkof.user.started_at) + ")");
+    }
+
+    function populate_accuracy() {
+      $('[data-id="radicals_learned"]').text(wkstats.item_counts.radical);
+      $('[data-id="kanji_learned"]').text(wkstats.item_counts.kanji);
+      $('[data-id="vocabulary_learned"]').text(wkstats.item_counts.vocabulary);
+
+      $('[data-id="total_readings"]').text(wkstats.review_counts.total_readings);
+      $('[data-id="total_meanings"]').text(wkstats.review_counts.total_meanings);
+      $('[data-id="total_reviews"]').text(wkstats.review_counts.total_reviews);
+      $('[data-id="correct_readings"]').text(wkstats.review_counts.correct_readings);
+      $('[data-id="correct_meanings"]').text(wkstats.review_counts.correct_meanings);
+      $('[data-id="correct_reviews"]').text(wkstats.review_counts.correct_reviews);
+      $('[data-id="incorrect_readings"]').text(wkstats.review_counts.incorrect_readings);
+      $('[data-id="incorrect_meanings"]').text(wkstats.review_counts.incorrect_meanings);
+      $('[data-id="incorrect_reviews"]').text(wkstats.review_counts.incorrect_reviews);
+      $('[data-id="accuracy_readings"]').text(percent(wkstats.accuracy.readings));
+      $('[data-id="accuracy_meanings"]').text(percent(wkstats.accuracy.meanings));
+      $('[data-id="accuracy_total"]').text(percent(wkstats.accuracy.total));
+      $('[data-id="radical_meanings"]').text(percent(wkstats.accuracy.radical.meanings));
+      $('[data-id="radical_total"]').text(percent(wkstats.accuracy.radical.total));
+      $('[data-id="kanji_readings"]').text(percent(wkstats.accuracy.kanji.readings));
+      $('[data-id="kanji_meanings"]').text(percent(wkstats.accuracy.kanji.meanings));
+      $('[data-id="kanji_total"]').text(percent(wkstats.accuracy.kanji.total));
+      $('[data-id="vocabulary_readings"]').text(percent(wkstats.accuracy.vocabulary.readings));
+      $('[data-id="vocabulary_meanings"]').text(percent(wkstats.accuracy.vocabulary.meanings));
+      $('[data-id="vocabulary_total"]').text(percent(wkstats.accuracy.vocabulary.total));
+    }
+
+    function populate_levelups() {
+      $('[data-id="time_on_level"]').text(duration(wkstats.level_durations[wkof.user.level]));
+    }
+
+    function populate_averages() {
+      let typical_levelup = wkstats.median_level_duration;
+      $('[data-id="typical_levelup"]').text(duration(typical_levelup));
+
+      let typical_levelup_in = typical_levelup - wkstats.level_durations[wkof.user.level];
+      let fastest_levelup_in = 0;
+
+      let levelup_in = Math.max(typical_levelup_in, fastest_levelup_in);
+      $('[data-id="levelup_in"]').text(duration(levelup_in));
+
+      if (wkof.user.restarted_at) {
+        $(".restart_date").prop("hidden", false);
+        $('[data-id="restart_date"]').text(
+          yyyymmdd(wkof.user.restarted_at) + " (" + days_ago(wkof.user.restarted_at) + ")",
+        );
+      }
+    }
+  })();
+</script>
