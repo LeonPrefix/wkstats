@@ -34,7 +34,6 @@
   }
 
   let using_apikey_override = false;
-  let skip_username_check = false;
 
   //------------------------------
   // Set up an API key to spoof for testing

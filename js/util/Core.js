@@ -17,10 +17,10 @@
   // Supported Modules
   //------------------------------
   const supported_modules = {
-    Apiv2: { url: "/js/Apiv2.js" },
-    ItemData: { url: "/js/ItemData.js" },
-    Progress: { url: "/js/Progress.js" },
-    Settings: { url: "/js/Settings.js" },
+    Apiv2: { url: "/js/util/Apiv2.js" },
+    ItemData: { url: "/js/util/ItemData.js" },
+    Progress: { url: "/js/util/Progress.js" },
+    Settings: { url: "/js/util/Settings.js" },
   };
 
   //########################################################################
@@ -62,17 +62,17 @@
   published_interface.support_files = {
     "jquery_ui.js": "/js/min/jquery-ui-1.12.1.min.js",
     "jqui_wkstats.css": "/css/jqui-wkstats.css",
-    "calc_stats.js": "/js/calc_stats.js",
-    "calc_projections.js": "/js/calc_projections.js",
-    "jlpt_kanji.js": "/js/jlpt_kanji.js",
-    "joyo_kanji.js": "/js/joyo_kanji.js",
-    "freq_kanji.js": "/js/freq_kanji.js",
-    "freq_aozora.js": "/js/freq_aozora.js",
-    "freq_news.js": "/js/freq_news.js",
-    "freq_nhkeasy.js": "/js/freq_nhkeasy.js",
-    "freq_twitter.js": "/js/freq_twitter.js",
-    "freq_wikipedia.js": "/js/freq_wikipedia.js",
-    "wk_snapshot.js": "/js/wk_snapshot.js",
+    "calc_stats.js": "/js/util/calc_stats.js",
+    "calc_projections.js": "/js/util/calc_projections.js",
+    "jlpt_kanji.js": "/js/util/jlpt_kanji.js",
+    "joyo_kanji.js": "/js/util/joyo_kanji.js",
+    "freq_kanji.js": "/js/util/freq_kanji.js",
+    "freq_aozora.js": "/js/util/freq_aozora.js",
+    "freq_news.js": "/js/util/freq_news.js",
+    "freq_nhkeasy.js": "/js/util/freq_nhkeasy.js",
+    "freq_twitter.js": "/js/util/freq_twitter.js",
+    "freq_wikipedia.js": "/js/util/freq_wikipedia.js",
+    "wk_snapshot.js": "/js/util/wk_snapshot.js",
   };
 
   //########################################################################
