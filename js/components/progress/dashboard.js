@@ -28,7 +28,7 @@
     const master = wkstats.item_progress.per_stage.master;
     const guru = wkstats.item_progress.per_stage.guru;
     const apprentice = wkstats.item_progress.per_stage.apprentice;
-    const overall = apprentice + guru + master + enlightened + burned;
+    const overall = guru + master + enlightened + burned;
 
     const burned_percentage = Math.round((burned / max) * 100);
     const enlightened_percentage = Math.round((enlightened / max) * 100);
@@ -37,7 +37,7 @@
     const apprentice_percentage = Math.round((apprentice / max) * 100);
     const overall_percentage = Math.round((overall / max) * 100);
 
-    $('[data-id="overall-learned"]').attr("data-label", `${overall_percentage}% (${overall} / ${max})`);
+    $('[data-id="overall-learned"]').attr("data-label", `${overall_percentage}% (${overall} / ${max} in Guru+)`);
     $('[data-id="apprentice-learned-fill"]').css("width", apprentice_percentage + "%");
     $('[data-id="guru-learned-fill"]').css("width", guru_percentage + "%");
     $('[data-id="master-learned-fill"]').css("width", master_percentage + "%");

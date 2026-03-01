@@ -205,19 +205,6 @@ function calc_accuracy() {
     if (!stats) continue;
 
     let itype = item.object;
-    if (item.assignments.srs_stage >= 5) item_counts[itype]++;
-
-    if ([1, 2, 3, 4].includes(item.assignments.srs_stage)) {
-      item_progress.per_stage.guru++;
-    } else if ([5, 6].includes(item.assignments.srs_stage)) {
-      item_progress.per_stage.guru++;
-    } else if (item.assignments.srs_stage === 7) {
-      item_progress.per_stage.master++;
-    } else if (item.assignments.srs_stage === 8) {
-      item_progress.per_stage.enlightened++;
-    } else if (item.assignments.srs_stage === 9) {
-      item_progress.per_stage.burned++;
-    }
 
     let mc, mi, rc, ri;
     if (itype === "radical") {
@@ -245,6 +232,20 @@ function calc_accuracy() {
     review_counts[itype].incorrect_readings += ri;
     review_counts[itype].correct_meanings += mc;
     review_counts[itype].incorrect_meanings += mi;
+
+    if (item.assignments.srs_stage >= 5) item_counts[itype]++;
+
+    if ([1, 2, 3, 4].includes(item.assignments.srs_stage)) {
+      item_progress.per_stage.apprentice++;
+    } else if ([5, 6].includes(item.assignments.srs_stage)) {
+      item_progress.per_stage.guru++;
+    } else if (item.assignments.srs_stage === 7) {
+      item_progress.per_stage.master++;
+    } else if (item.assignments.srs_stage === 8) {
+      item_progress.per_stage.enlightened++;
+    } else if (item.assignments.srs_stage === 9) {
+      item_progress.per_stage.burned++;
+    }
   }
 
   accuracy.readings = review_counts.correct_readings / review_counts.total_readings;
