@@ -97,7 +97,7 @@
     // Draw headers.
     let have_leftover = false;
     let html =
-      '<table class="coverage"><tr class="header"><td>Wanikani</td><td class="header_div" colspan="' +
+      '<table class="coverage"><tr class="header"><td>WaniKani</td><td class="header_div" colspan="' +
       data.length +
       '">Frequency</td></tr>';
     html += '<tr class="header"><td>Level</td>';
@@ -133,7 +133,7 @@
     html += "</table>";
 
     if (have_leftover) {
-      html += '<table class="nonwk"><tr class="header"><td colspan="2">Kanji Not On Wanikani</td></tr>';
+      html += '<table class="nonwk"><tr class="header"><td colspan="2">Kanji Not On WaniKani</td></tr>';
       for (let col = 0; col < data.length; col++) {
         let total = data[col].group_total;
         let count = data[col].not_on_wk.length;

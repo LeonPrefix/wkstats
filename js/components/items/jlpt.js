@@ -34,7 +34,7 @@
     "burn",
   ];
   let srs_names = [
-    "Not On Wanikani",
+    "Not On WaniKani",
     "Locked",
     "Lesson",
     "Apprentice 1",
@@ -216,7 +216,7 @@
       compare: numeric_compare,
       get_key: (item) => (item.is_on_wk ? item.data.level : 0),
       get_order: (key) => (key === 0 ? 999 : key),
-      get_label: (key) => (key > 0 ? "Level " + key : "Not On Wanikani"),
+      get_label: (key) => (key > 0 ? "Level " + key : "Not On WaniKani"),
     },
     item_type: {
       compare: numeric_compare,
@@ -504,7 +504,7 @@
         break;
     }
     html += 'Meaning: <span class="data">' + to_title_case(meanings.join(", ")) + "</span><br>";
-    html += 'Wanikani Level: <span class="data">' + item.data.level + "</span><br>";
+    html += 'WaniKani Level: <span class="data">' + item.data.level + "</span><br>";
     if (item.is_on_wk) {
       let srs = item.is_on_wk
         ? item.assignments && item.assignments.unlocked_at

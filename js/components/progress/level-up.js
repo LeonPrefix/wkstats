@@ -366,7 +366,7 @@
       "  </g>" +
       '  <text class="x_axis" x="0" y="0" transform="translate(' +
       [chart.data.width / 2, chart.data.base + chart.x_labels.height].join() +
-      ')">Wanikani Level</text>' +
+      ')">WaniKani Level</text>' +
       groups.join("") +
       '  <g class="grid" transform="translate(0.5,0.5)">' +
       '    <path d="M0,' +

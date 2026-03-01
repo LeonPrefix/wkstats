@@ -263,7 +263,7 @@
           return filter_value[item.data.level] === true;
         },
         hover_tip:
-          'Filter by Wanikani level\nExamples:\n  "*" (All levels)\n  "1..3,5" (Levels 1 through 3, and level 5)\n  "1..-1" (From level 1 to your current level minus 1)\n  "-5..+0" (Your current level and previous 5 levels)\n  "+1" (Your next level)',
+          'Filter by WaniKani level\nExamples:\n  "*" (All levels)\n  "1..3,5" (Levels 1 through 3, and level 5)\n  "1..-1" (From level 1 to your current level minus 1)\n  "-5..+0" (Your current level and previous 5 levels)\n  "+1" (Your next level)',
       },
       srs: {
         type: "multi",

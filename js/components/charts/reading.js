@@ -13,6 +13,17 @@
   }
 
   let groups;
+  Promise.all([
+    wkof.load_script(wkof.support_files["freq_aozora.js"], true),
+    wkof.load_script(wkof.support_files["freq_nhkeasy.js"], true),
+    wkof.load_script(wkof.support_files["freq_news.js"], true),
+    wkof.load_script(wkof.support_files["freq_twitter.js"], true),
+    wkof.load_script(wkof.support_files["freq_wikipedia.js"], true),
+  ]).then(() => {
+    groups = [freq_aozora, freq_nhkeasy, freq_news, freq_twitter, freq_wikipedia];
+    wkof.set_state("wkof.reading.kanji", "ready");
+  });
+
   let items_src = use_snapshot ? "wk_snapshot" : "wkdata.items";
   wkof.ready(items_src + ",reading.kanji").then(draw_chart);
 
@@ -55,7 +66,7 @@
 
     // Draw headers.
     let html =
-      '<table class="coverage"><tr class="header"><td>Wanikani</td><td class="header_div" colspan="' +
+      '<table class="coverage"><tr class="header"><td>WaniKani</td><td class="header_div" colspan="' +
       data.length +
       '">Frequency</td></tr>';
     html += '<tr class="header"><td>Level</td>';

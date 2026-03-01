@@ -272,7 +272,7 @@
       if (options.disable_progress_dialog !== true) wkof.Progress.update(progress_data);
       // If we are using an override key, abort and return error.
       if (using_apikey_override) {
-        fetch_promise.reject("Wanikani doesn't recognize the apiv2_key_override key (\"" + wkof.Apiv2.key + '")');
+        fetch_promise.reject("WaniKani doesn't recognize the apiv2_key_override key (\"" + wkof.Apiv2.key + '")');
         return;
       }
 
