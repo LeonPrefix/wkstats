@@ -226,6 +226,7 @@
 
       P.maxLevel = userData.subscription.max_level_granted;
       P.progressions = Object.values(levels).map((level) => level.data);
+      console.log(P.progressions);
       P.now = new Date();
 
       const time = function (item, burn) {

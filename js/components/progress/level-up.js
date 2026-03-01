@@ -145,13 +145,11 @@
     let defs = [],
       groups = [];
     let w = chart.levels.width + chart.levels.spacing;
-    let rw = chart.resets.width + chart.levels.spacing;
     let x = chart.levels.spacing / 2;
     for (let level = 1; level <= chart.levels.count; level++) {
       let grp = [];
       let lvl_len = wkstats.level_durations[level];
       let height = Math.round(dy * lvl_len);
-      let html = "";
       let has_reset = wkstats.level_times[level].reset_time !== undefined;
       if (has_reset) {
         let w = chart.resets.width;

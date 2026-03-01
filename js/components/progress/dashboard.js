@@ -6,6 +6,7 @@
     return;
   }
 
+  wkof.load_script(wkof.support_files["calc_projections.js"], false);
   wkof.load_script(wkof.support_files["calc_stats.js"], false).then(populate_user_info);
 
   wkof.ready("wkstats.accuracy").then(() => {
@@ -13,7 +14,7 @@
     populate_accuracy();
   });
   wkof.ready("wkstats.levelups").then(populate_levelups);
-  wkof.ready("wkstats.average").then(populate_averages);
+  wkof.ready("wkstats.average,wkstats.projections").then(populate_averages);
 
   function populate_user_info() {
     $('[data-id="user_level"]').text(wkof.user.level);
@@ -75,12 +76,53 @@
     $('[data-id="time_on_level"]').text(duration(wkstats.level_durations[wkof.user.level]));
   }
 
+  function countComponent(componentLevel, itemLevel) {
+    return !(itemLevel > wkof.user.level && componentLevel < itemLevel);
+  }
+
+  function unlock(item, itemLevel) {
+    return countComponent(item.data.level, itemLevel)
+      ? (item.object === "radical" || item.object === "kana_vocabulary"
+          ? 0
+          : item.data.component_subject_ids
+              .map((id) => Math.max(0, unlock(wkdata.items_by_subject_id[id], item.data.level)))
+              .reduce((a, b) => Math.max(a, b))) + time(item)
+      : 0;
+  }
+
+  function time(item) {
+    if (!get(item.assignments, "passed_at")) {
+      let interval = get(item.assignments, "available_at")
+        ? Math.max(0, (new Date(item.assignments.available_at) - Date.now()) / 1000)
+        : 0;
+      const srs = wkdata.srs_info[item.data.spaced_repetition_system_id].data;
+      const target = get(srs, "passing_stage_position");
+      for (let i = (get(item.assignments, "srs_stage") || 0) + 1; i < target; i++) {
+        interval += srs.stages[i].interval;
+      }
+      return interval;
+    }
+
+    return (new Date(get(item.assignments, "passed_at")) - Date.now()) / 1000;
+  }
+
+  function get(a, b) {
+    return a && a[b];
+  }
+
   function populate_averages() {
     let typical_levelup = wkstats.median_level_duration;
     $('[data-id="typical_levelup"]').text(duration(typical_levelup));
 
     let typical_levelup_in = typical_levelup - wkstats.level_durations[wkof.user.level];
-    let fastest_levelup_in = 0;
+
+    let itemsOfLevel = wkof.ItemData.get_index(wkdata.items_by_level[wkof.user.level], "item_type");
+    itemsOfLevel = [...itemsOfLevel.radical, ...itemsOfLevel.kanji];
+
+    const secondUntilFastest = itemsOfLevel.map((v) => unlock(v, v.data.level)).sort((a, b) => a - b)[
+      Math.ceil(itemsOfLevel.length * 0.9) - 1
+    ];
+    let fastest_levelup_in = secondUntilFastest / 60 / 60 / 24;
 
     let levelup_in = Math.max(typical_levelup_in, fastest_levelup_in);
     $('[data-id="levelup_in"]').text(duration(levelup_in));

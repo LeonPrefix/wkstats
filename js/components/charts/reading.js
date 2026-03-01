@@ -13,17 +13,6 @@
   }
 
   let groups;
-  let promises = Promise.all([
-    wkof.load_script(wkof.support_files["freq_aozora.js"], false),
-    wkof.load_script(wkof.support_files["freq_nhkeasy.js"], false),
-    wkof.load_script(wkof.support_files["freq_news.js"], false),
-    wkof.load_script(wkof.support_files["freq_twitter.js"], false),
-    wkof.load_script(wkof.support_files["freq_wikipedia.js"], false),
-  ]).then(() => {
-    groups = [freq_aozora, freq_nhkeasy, freq_news, freq_twitter, freq_wikipedia];
-    wkof.set_state("wkof.reading.kanji", "ready");
-  });
-
   let items_src = use_snapshot ? "wk_snapshot" : "wkdata.items";
   wkof.ready(items_src + ",reading.kanji").then(draw_chart);
 
@@ -65,7 +54,6 @@
     }
 
     // Draw headers.
-    let have_leftover = false;
     let html =
       '<table class="coverage"><tr class="header"><td>Wanikani</td><td class="header_div" colspan="' +
       data.length +

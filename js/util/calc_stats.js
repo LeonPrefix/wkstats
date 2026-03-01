@@ -437,7 +437,6 @@ function calc_levelups() {
 //================================================
 function estimate_missing_levelups() {
   // Find the median of each level.
-  let cutoff = wkof.user.restarted_at || new Date(wkof.user.started_at);
   for (let level = 1; level <= wkof.user.level; level++) {
     let level_time = wkstats.level_times[level];
     if (level_time.source !== "unknown") continue;
