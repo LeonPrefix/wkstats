@@ -38,11 +38,21 @@
     const overall_percentage = Math.round((overall / max) * 100);
 
     $('[data-id="overall-learned"]').attr("data-label", `${overall_percentage}% (${overall} / ${max} in Guru+)`);
-    $('[data-id="apprentice-learned-fill"]').css("width", apprentice_percentage + "%");
-    $('[data-id="guru-learned-fill"]').css("width", guru_percentage + "%");
-    $('[data-id="master-learned-fill"]').css("width", master_percentage + "%");
-    $('[data-id="enlightened-learned-fill"]').css("width", enlightened_percentage + "%");
-    $('[data-id="burned-learned-fill"]').css("width", burned_percentage + "%");
+    $('[data-id="apprentice-learned-fill"]')
+      .css("width", apprentice_percentage + "%")
+      .text(apprentice_percentage >= 3 ? apprentice_percentage + "%" : "");
+    $('[data-id="guru-learned-fill"]')
+      .css("width", guru_percentage + "%")
+      .text(guru_percentage >= 3 ? guru_percentage + "%" : "");
+    $('[data-id="master-learned-fill"]')
+      .css("width", master_percentage + "%")
+      .text(master_percentage >= 3 ? master_percentage + "%" : "");
+    $('[data-id="enlightened-learned-fill"]')
+      .css("width", enlightened_percentage + "%")
+      .text(enlightened_percentage >= 3 ? enlightened_percentage + "%" : "");
+    $('[data-id="burned-learned-fill"]')
+      .css("width", burned_percentage + "%")
+      .text(burned_percentage >= 3 ? burned_percentage + "%" : "");
   }
 
   function populate_accuracy() {

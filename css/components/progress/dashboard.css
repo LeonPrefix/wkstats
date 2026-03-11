@@ -90,6 +90,7 @@
   position: relative;
   font-size: 0.9em;
   border: 1px solid black;
+  margin-top: 5px;
   margin-bottom: 10px;
   width: 60%;
   height: 18px;
@@ -102,16 +103,21 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -155%);
 }
 
 .main-content #progress .progress-fill {
   height: 100%;
   width: 0;
+  font-size: 8px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-content #progress .apprentice-color {
-  background-color: #bb60d2;
+  background-color: #ff33bb;
 }
 .main-content #progress .guru-color {
   background-color: #bb60d2;
